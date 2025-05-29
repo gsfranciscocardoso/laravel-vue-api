@@ -1,6 +1,6 @@
 <template>
-    <Teleport to="body"> 
-        <div class="fixed inset-0 w-full z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" >
+    <Teleport to="body">
+        <div class="fixed inset-0 w-full z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
             <dialog open ref="modalRef"
                 class="m-auto w-full max-w-md rounded-xl shadow-2xl bg-white p-6 animate-fade-in" @click.self="close">
                 <div class="flex items-center justify-between mb-4">
@@ -79,16 +79,14 @@
 
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Role</label>
-                        <select v-model="form.role"
-                            class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiAjdjQgdjUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[right_0.75rem_center] bg-[length:1.25rem_1.25rem]"
-                            required>
-                            <option value="" disabled selected>Select a role</option>
+                        <select v-model="form.roles" required
+                            class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all appearance-none bg-[url('data:image/svg+xml;base64,...')] bg-no-repeat bg-[right_0.75rem_center] bg-[length:1.25rem_1.25rem]">
+                            <option value="" disabled>Select a role</option>
                             <option v-for="role in roles" :key="role" :value="role" class="capitalize">
                                 {{ role }}
                             </option>
                         </select>
                     </div>
-
                     <div class="flex justify-end space-x-3 pt-2">
                         <button type="button" @click="close"
                             class="px-5 py-2.5 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -147,7 +145,7 @@ const form = reactive({
     role: '',
 })
 
-const isOpen = ref(false) 
+const isOpen = ref(false)
 
 watch(
     () => props.user,
@@ -155,7 +153,7 @@ watch(
         form.name = user?.name || ''
         form.email = user?.email || ''
         form.password_confirmation = user?.password_confirmation || ''
-        form.role = user?.role || props.roles[0]
+        form.roles = user?.roles[0] || props.roles[0]
         form.password = ''
     },
     { immediate: true }
@@ -175,7 +173,7 @@ async function submitForm() {
         if (props.user?.id) {
             await axios.put(`/api/users/${props.user.id}`, form)
         } else {
-            await axios.post('/api/users', form)
+            await axios.post('/api/users', form);
         }
         emit('saved')
         close()
@@ -189,4 +187,3 @@ async function submitForm() {
 
 onMounted(() => open())
 </script>
-

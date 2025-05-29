@@ -44,12 +44,14 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
+        // 'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()->symbols()],
+        // 'role.*' => 'exists:roles,name',
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()->symbols()],
-            'roles' => 'required|array',
-            'roles.*' => 'exists:roles,name',
+            'password' => ['required', 'confirmed', Password::min(8)],
+            'roles' => 'required|exists:roles,name',
+            
         ]);
 
         if ($validator->fails()) {
@@ -84,8 +86,7 @@ class UsersController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $id,
             'password' => ['sometimes', 'nullable', 'confirmed', Password::min(8)->mixedCase()->numbers()->symbols()],
-            'roles' => 'sometimes|required|array',
-            'roles.*' => 'exists:roles,name',
+            'roles' => 'sometimes|required|exists:roles,name',
         ]);
 
         if ($validator->fails()) {
