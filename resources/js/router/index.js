@@ -3,7 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {  
     path: '/',
-    redirect: '/home'
+    name: 'landing',
+    component: () => import('@/pages/Landing.vue'),
+    meta: { requiresAuth: false }
   },
   {  
     path: '/home',

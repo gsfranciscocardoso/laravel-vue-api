@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar v-if="isAuthenticated" />
-    <main v-if="isAuthenticated" class="pt-16 md:pt-14 max-w-7xl mx-auto px-4"> <!-- padding top = 3rem -->
+    <main v-if="isAuthenticated" class="pt-20 mt-3 md:pt-14 max-w-7xl mx-auto px-4 "> <!-- padding top = 3rem -->
       <router-view />
     </main>
     <div v-else> 

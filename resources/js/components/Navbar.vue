@@ -1,6 +1,6 @@
 <template>
  <nav
-  class="fixed w-full top-0 left-0 bg-white shadow-sm border-b border-gray-100 z-50"
+  class="fixed w-full top-0 left-0 bg-white shadow-sm border-b border-gray-100 z-50 "
   role="navigation"
   aria-label="Primary Navigation"
 >
@@ -16,7 +16,7 @@
     <!-- Desktop Menu -->
     <div class="hidden md:flex items-center space-x-8">
       <div class="flex space-x-6">
-        <RouterLink
+        <RouterLink 
           v-for="link in navLinks"
           :key="link.to"
           :to="link.to"
@@ -130,9 +130,12 @@ import { useRouter } from "vue-router";
 const isOpen = ref(false);
 const router = useRouter();
 const { isAuthenticated, logout } = useAuth();
-
+if(!isAuthenticated) {
+  
+}
 const navLinks = [
-  { to: '/', text: 'Home' },
+  { to: '/', text: 'CV'},
+  { to: '/home', text: 'Home'  },
   { to: '/users', text: 'Users' },
   { to: '/about', text: 'About' },
 ];
